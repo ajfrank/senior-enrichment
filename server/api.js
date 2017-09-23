@@ -1,10 +1,80 @@
-'use strict'
-const api = require('express').Router()
-const db = require('../db')
+"use strict";
+const api = require("express").Router();
+const db = require("../db");
+const Campus = require("../db/models/Campus");
+const Student = require("../db/models/Student");
 
 // If you aren't getting to this object, but rather the index.html (something with a joke) your path is wrong.
-	// I know this because we automatically send index.html for all requests that don't make sense in our backend.
-	// Ideally you would have something to handle this, so if you have time try that out!
-api.get('/hello', (req, res) => res.send({hello: 'world'}))
+// I know this because we automatically send index.html for all requests that don't make sense in our backend.
+// Ideally you would have something to handle this, so if you have time try that out!
+api.get("/campuses", (req, res, next) => {
+  Campus.findAll().then(result => {
+    res.send(result);
+  });
+});
 
-module.exports = api
+api.get("/campus/:id", (req, res, next) => {
+  Campus.findById(req.params.id).then(result => {
+    res.send(result);
+  });
+});
+
+api.post("/campus/:name", (req, res, next) => {
+  Campus.create({
+    name: req.params.name
+  })
+    .then(result => {
+      res.send(`${result.name} was created`);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+});
+
+api.delete("/campus/:id", (req, res, next) => {
+  Campus.destroy({
+    where: {
+      id: parseInt(req.params.id)
+    }
+  }).then(result => {
+    res.send(`Campus was deleted`);
+  });
+});
+
+api.get("/students", (req, res, next) => {
+  Student.findAll({
+    include: [{ model: Campus }]
+  }).then(result => {
+    res.send(result);
+  });
+});
+
+api.get("/student/:id", (req, res, next) => {
+  Student.findById(req.params.id).then(result => {
+    res.send(result);
+  });
+});
+
+api.post("/student/:name", (req, res, next) => {
+  Student.create({
+    name: req.params.name
+  })
+    .then(result => {
+      res.send(`${result.name} was created`);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+});
+
+api.delete("/student/:id", (req, res, next) => {
+  Student.destroy({
+    where: {
+      id: parseInt(req.params.id)
+    }
+  }).then(result => {
+    res.send(`Student was deleted`);
+  });
+});
+
+module.exports = api;
