@@ -1,15 +1,30 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import Campus from "./Campus";
 
 function Campuses(props) {
   return (
-    <div className="row">
-      <h1>Campuses</h1>
-      <ul>
+    <div className="col-sm-8">
+      <div className="row">
+        <h1>
+          Campuses
+          <button
+            className="btn btn-default pull-right"
+            title="Add New Campus"
+            onClick={() => {
+              props.history.push("/campus/add");
+            }}
+          >
+            <span className="glyphicon glyphicon-plus" />
+          </button>
+        </h1>
+      </div>
+      <div className="row">
         {props.campuses.map(campus => {
-          return <li key={campus.id}>{campus.name}</li>;
+          return <Campus key={campus.id} campus={campus} />;
         })}
-      </ul>
+      </div>
     </div>
   );
 }

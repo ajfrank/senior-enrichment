@@ -6,16 +6,25 @@ const Student = require("./Student");
 module.exports = () => {
   return Promise.all([
     Campus.create({
-      name: "Luna"
+      name: "Luna",
+      image:
+        "http://www.starshipsodyssey.com/wp-content/uploads/2017/03/superluna-14n_0.jpg"
     }),
     Campus.create({
-      name: "Terra"
+      name: "Terra",
+      image: "http://www.castfvg.it/sistsola/terra/nasa/terra_005.jpg"
     }),
     Campus.create({
-      name: "Titan"
+      name: "Titan",
+      image:
+        "https://www.universetoday.com/wp-content/uploads/2016/04/titan_large.jpg"
     }),
     Campus.create({
-      name: "Mars"
+      name: "Mars",
+      image: "http://solarviews.com/raw/mars/marswithclouds.jpg"
+    }),
+    Campus.create({
+      name: "Placeholder Test"
     })
   ]).then(([Luna, Terra, Titan, Mars]) => {
     Promise.all([

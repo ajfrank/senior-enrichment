@@ -8,7 +8,7 @@ const Student = require("../db/models/Student");
 // I know this because we automatically send index.html for all requests that don't make sense in our backend.
 // Ideally you would have something to handle this, so if you have time try that out!
 api.get("/campuses", (req, res, next) => {
-  Campus.findAll().then(result => {
+  Campus.findAll({ order: ["id"] }).then(result => {
     res.send(result);
   });
 });
@@ -21,10 +21,11 @@ api.get("/campus/:id", (req, res, next) => {
 
 api.post("/campus/:name", (req, res, next) => {
   Campus.create({
-    name: req.params.name
+    name: req.params.name,
+    image: req.body.params.image
   })
     .then(result => {
-      res.send(`${result.name} was created`);
+      res.send(result);
     })
     .catch(err => {
       console.error(err);
@@ -36,14 +37,17 @@ api.delete("/campus/:id", (req, res, next) => {
     where: {
       id: parseInt(req.params.id)
     }
-  }).then(result => {
-    res.send(`Campus was deleted`);
-  });
+  })
+    .then(result => {
+      res.status(204).end();
+    })
+    .catch(next);
 });
 
 api.get("/students", (req, res, next) => {
   Student.findAll({
-    include: [{ model: Campus }]
+    include: [{ model: Campus }],
+    order: ["id"]
   }).then(result => {
     res.send(result);
   });

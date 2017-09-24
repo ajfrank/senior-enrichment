@@ -1,17 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 export default function Nav(props) {
   return (
     <div>
       <ul className="nav nav-pills">
         <li role="presentation" className="active">
-          <Link to="/">Home</Link>
+          <NavLink to="/">Home</NavLink>
         </li>
         <li role="presentation">
-          <Link to="/Students">Students</Link>
+          <NavLink to="/Students">Students</NavLink>
         </li>
       </ul>
+      <hr />
     </div>
   );
 }
