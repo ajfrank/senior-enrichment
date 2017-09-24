@@ -5,11 +5,26 @@ function Students(props) {
   return (
     <div>
       <h1>Students</h1>
-      <ul>
-        {props.students.map(student => {
-          return <li key={student.id}>{student.name}</li>;
-        })}
-      </ul>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Campus</th>
+          </tr>
+        </thead>
+        <tbody>
+          {props.students.map(student => {
+            return (
+              <tr key={student.id}>
+                <th scope="row">{student.id}</th>
+                <td>{student.name}</td>
+                <td>{student.campus.name}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 }
