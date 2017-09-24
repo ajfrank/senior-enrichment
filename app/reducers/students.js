@@ -16,25 +16,18 @@ export function getStudent(student) {
 //thunk creators
 
 export function fetchStudents() {
-  function thunk(dispatch) {
+  return function thunk(dispatch) {
     return axios
       .get("/api/students")
-      .then(res => {
-        return res.data;
-      })
-      .then(students => {
-        return dispatch(getStudents(students));
-      })
-      .catch(err => {
-        console.error(err);
-      });
-  }
+      .then(res => res.data)
+      .then(students => dispatch(getStudents(students)))
+      .catch(err => console.error(err));
+  };
 }
 
 //reducer
 
 export default function students(state = [], action) {
-  console.log("action in students", action);
   switch (action.type) {
     case GET_STUDENTS:
       return action.students;

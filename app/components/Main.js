@@ -18,7 +18,7 @@ export default class Main extends Component {
       <div>
         <Nav />
         <div className="row">
-          <Route path="/" component={Campuses} />
+          <Route exact path="/" component={Campuses} />
           <Route path="/students" component={Students} />
         </div>
       </div>

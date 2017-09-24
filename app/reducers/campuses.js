@@ -22,9 +22,8 @@ export function fetchCampuses() {
     return axios
       .get("/api/campuses")
       .then(res => res.data)
-      .then(campuses => {
-        dispatch(getCampuses(campuses));
-      });
+      .then(campuses => dispatch(getCampuses(campuses)))
+      .catch(err => console.error(err));
   };
 }
 

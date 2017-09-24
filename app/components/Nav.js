@@ -1,14 +1,15 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Nav(props) {
   return (
     <div>
       <ul className="nav nav-pills">
         <li role="presentation" className="active">
-          <a href="#">Home</a>
+          <Link to="/">Home</Link>
         </li>
         <li role="presentation">
-          <a href="#">Students</a>
+          <Link to="/Students">Students</Link>
         </li>
       </ul>
     </div>
