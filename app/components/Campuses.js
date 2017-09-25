@@ -13,7 +13,7 @@ function Campuses(props) {
             className="btn btn-default pull-right"
             title="Add New Campus"
             onClick={() => {
-              props.history.push("/campus/add");
+              props.history.push("/campus/form/add");
             }}
           >
             <span className="glyphicon glyphicon-plus" />

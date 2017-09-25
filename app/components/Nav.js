@@ -5,7 +5,7 @@ export default function Nav(props) {
   return (
     <div>
       <ul className="nav nav-pills">
-        <li role="presentation" className="active">
+        <li role="presentation">
           <NavLink to="/">Home</NavLink>
         </li>
         <li role="presentation">

@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import Campuses from "./Campuses";
 import Nav from "./Nav";
 import NewCampusForm from "./NewCampusForm";
+import StudentForm from "./StudentForm";
 import Students from "./Students";
 import CampusStudents from "./CampusStudents";
 import store from "../store";
@@ -23,7 +24,8 @@ export default class Main extends Component {
           <Route exact path="/" component={Campuses} />
           <Route path="/campus" component={Campuses} />
           <Route path="/students" component={Students} />
-          <Route path="/campus/add" component={NewCampusForm} />
+          <Route path="/students/add" component={StudentForm} />
+          <Route path="/campus/form/add" component={NewCampusForm} />
           <Route exact path="/campus/:id" component={CampusStudents} />
         </div>
       </div>

@@ -59,13 +59,18 @@ api.get("/student/:id", (req, res, next) => {
   });
 });
 
-api.post("/student/:name", (req, res, next) => {
+api.post("/student", (req, res, next) => {
   Student.create({
-    name: req.params.name
+    name: req.body.params.name,
+    campusId: req.body.params.campusId * 1
   })
-    .then(result => {
-      res.send(`${result.name} was created`);
+    .then(student => {
+      return Student.findOne({
+        where: { id: student.id },
+        include: [{ model: Campus }]
+      });
     })
+    .then(result => res.send(result))
     .catch(err => {
       console.error(err);
     });

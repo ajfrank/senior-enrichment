@@ -9,13 +9,10 @@ class CampusStudents extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    store.dispatch(fetchCampuses());
-    store.dispatch(fetchStudents());
-  }
-
   render() {
     const { students, campus } = this.props;
+    if (!campus) return <h1>LOADING</h1>;
+
     return (
       <div className="col-sm-4">
         <div className="panel panel-default">

@@ -17,10 +17,24 @@ class Students extends React.Component {
   }
 
   render() {
-    const { students } = this.props;
+    const { students, history } = this.props;
+    if (!students) return <h1>LOADING</h1>;
     return (
-      <div>
-        <h1>Students</h1>
+      <div className="col-sm-8">
+        <div className="row">
+          <h1>
+            Students
+            <button
+              className="btn btn-default pull-right"
+              title="Add New Student"
+              onClick={() => {
+                history.push("/students/add");
+              }}
+            >
+              <span className="glyphicon glyphicon-plus" />
+            </button>
+          </h1>
+        </div>
         <table className="table">
           <thead>
             <tr>
@@ -35,7 +49,11 @@ class Students extends React.Component {
                 <tr key={student.id}>
                   <th scope="row">{student.id}</th>
                   <td>{student.name}</td>
-                  <td>{student.campus.name}</td>
+                  <td>
+                    <Link to={`/campus/${student.campusId}`}>
+                      {student.campus.name}
+                    </Link>
+                  </td>
                   <td>
                     <button
                       className="btn btn-warning"
