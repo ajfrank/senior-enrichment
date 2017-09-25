@@ -47,6 +47,7 @@ export function createStudent(student) {
       .post("/api/student", {
         params: {
           name: student.name,
+          email: student.email,
           campusId: student.campusId
         }
       })

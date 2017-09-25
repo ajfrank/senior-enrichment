@@ -30,26 +30,32 @@ module.exports = () => {
     Promise.all([
       Student.create({
         name: "AJ Frank",
+        email: "aj@gmail.com",
         campusId: Luna.id
       }),
       Student.create({
         name: "Ariel Frank",
+        email: "ariel@gmail.com",
         campusId: Luna.id
       }),
       Student.create({
         name: "Jeremy Frank",
+        email: "jeremy@gmail.com",
         campusId: Terra.id
       }),
       Student.create({
         name: "Malia Holland",
+        email: "malia@gmail.com",
         campusId: Terra.id
       }),
       Student.create({
         name: "Justin Yang",
+        email: "justin@gmail.com",
         campusId: Titan.id
       }),
       Student.create({
         name: "Uni Yang",
+        email: "uni@gmail.com",
         campusId: Mars.id
       })
     ]);

@@ -5,6 +5,7 @@ import Nav from "./Nav";
 import NewCampusForm from "./NewCampusForm";
 import StudentForm from "./StudentForm";
 import Students from "./Students";
+import Student from "./Student";
 import CampusStudents from "./CampusStudents";
 import store from "../store";
 import { fetchCampuses } from "../reducers/campuses";
@@ -23,10 +24,14 @@ export default class Main extends Component {
         <div className="row">
           <Route exact path="/" component={Campuses} />
           <Route path="/campus" component={Campuses} />
-          <Route path="/students" component={Students} />
-          <Route path="/students/add" component={StudentForm} />
           <Route path="/campus/form/add" component={NewCampusForm} />
           <Route exact path="/campus/:id" component={CampusStudents} />
+          <Route path="/students" component={Students} />
+          <Route exact path="/students/:id" component={Student} />
+          <Route
+            path="/students/form/add"
+            render={() => <StudentForm addStudent={true} />}
+          />
         </div>
       </div>
     );

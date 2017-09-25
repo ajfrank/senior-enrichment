@@ -62,6 +62,7 @@ api.get("/student/:id", (req, res, next) => {
 api.post("/student", (req, res, next) => {
   Student.create({
     name: req.body.params.name,
+    email: req.body.params.email,
     campusId: req.body.params.campusId * 1
   })
     .then(student => {

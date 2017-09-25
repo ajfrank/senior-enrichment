@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { createStudent } from "../reducers/students";
 import store from "../store";
+import _ from "lodash";
 
 class StudentForm extends React.Component {
   constructor(props) {
@@ -13,27 +14,34 @@ class StudentForm extends React.Component {
     e.preventDefault();
     const student = {
       name: e.target.name.value,
+      email: e.target.email.value,
       campusId: e.target.campus.value
     };
     store.dispatch(this.props.createStudent(student));
     e.target.name.value = "";
+    e.target.email.value = "";
     e.target.campus.value = "";
   }
 
   render() {
-    const { campuses } = this.props;
+    const { campuses, addStudent } = this.props;
     const { handleSubmit } = this;
+    console.log(addStudent);
     return (
       <div className="col-sm-4">
         <div className="panel panel-default">
           <div className="panel-heading">
-            <h3>Add a Student</h3>
+            <h3>{addStudent ? "Add a Student" : "Edit Student"}</h3>
           </div>
           <div className="panel-body">
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label>Name</label>
                 <input type="text" className="form-control" name="name" />
+              </div>
+              <div className="form-group">
+                <label>Email</label>
+                <input type="email" className="form-control" name="email" />
               </div>
               <div className="form-group">
                 <label>Campus</label>
@@ -59,9 +67,11 @@ class StudentForm extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
+  console.log("ownProps", ownProps);
   return {
-    campuses: state.campuses
+    campuses: state.campuses,
+    ownForm: !_.isEmpty(ownProps) && ownProps.addStudent ? true : false
   };
 };
 
