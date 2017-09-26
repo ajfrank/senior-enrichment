@@ -1,32 +1,48 @@
 import React from "react";
 import { connect } from "react-redux";
-import { createStudent } from "../reducers/students";
+import { createStudent, putStudent } from "../reducers/students";
 import store from "../store";
 import _ from "lodash";
 
 class StudentForm extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      student: props.student
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.student !== this.props.student) {
+      this.setState({
+        student: nextProps.student
+      });
+    }
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    const student = {
-      name: e.target.name.value,
-      email: e.target.email.value,
-      campusId: e.target.campus.value
-    };
-    store.dispatch(this.props.createStudent(student));
-    e.target.name.value = "";
-    e.target.email.value = "";
-    e.target.campus.value = "";
+    const student = this.state.student;
+    const { addStudent, createStudent, putStudent } = this.props;
+    const thunk = addStudent ? createStudent(student) : putStudent(student);
+    store.dispatch(thunk);
+  }
+
+  handleChange(e) {
+    console.log("handle change is firing");
+    const change = {};
+    change[e.target.name] = e.target.value;
+    this.setState({ student: Object.assign(this.state.student, change) });
+    console.log("this.state", this.state);
   }
 
   render() {
     const { campuses, addStudent } = this.props;
-    const { handleSubmit } = this;
-    console.log(addStudent);
+    const { name, email, campusId } = this.state.student;
+    const { handleSubmit, handleChange } = this;
+
     return (
       <div className="col-sm-4">
         <div className="panel panel-default">
@@ -37,15 +53,31 @@ class StudentForm extends React.Component {
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label>Name</label>
-                <input type="text" className="form-control" name="name" />
+                <input
+                  type="text"
+                  className="form-control"
+                  name="name"
+                  value={name}
+                  onChange={handleChange}
+                />
               </div>
               <div className="form-group">
                 <label>Email</label>
-                <input type="email" className="form-control" name="email" />
+                <input
+                  type="email"
+                  className="form-control"
+                  name="email"
+                  value={email}
+                  onChange={handleChange}
+                />
               </div>
               <div className="form-group">
-                <label>Campus</label>
-                <select name="campus">
+                <label>Campus:&nbsp;</label>
+                <select
+                  name="campusId"
+                  onChange={handleChange}
+                  value={campusId || ""}
+                >
                   <option value="">(select a campus)</option>
                   {campuses.map(campus => (
                     <option value={campus.id} key={campus.id}>
@@ -68,15 +100,22 @@ class StudentForm extends React.Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  console.log("ownProps", ownProps);
+  console.log(ownProps.student);
   return {
     campuses: state.campuses,
-    ownForm: !_.isEmpty(ownProps) && ownProps.addStudent ? true : false
+    addStudent: !_.isEmpty(ownProps) && ownProps.addStudent ? true : false,
+    student: ownProps.student || {
+      name: "",
+      email: "",
+      campus: {},
+      campusId: "",
+      id: ""
+    }
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return { createStudent };
+  return { createStudent, putStudent };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudentForm);

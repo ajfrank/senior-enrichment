@@ -4,6 +4,7 @@ import axios from "axios";
 const GET_STUDENTS = "GET_STUDENTS";
 const REMOVE_STUDENT = "REMOVE_STUDENT";
 const ADD_STUDENT = "ADD_STUDENT";
+const UPDATE_STUDENT = "UPDATE_STUDENT";
 
 //action creators
 export function getStudents(students) {
@@ -56,6 +57,23 @@ export function createStudent(student) {
   };
 }
 
+export function putStudent(student) {
+  return function thunk(dispatch) {
+    axios
+      .put("/api/student", {
+        params: {
+          name: student.name,
+          email: student.email,
+          campusId: student.campusId,
+          id: student.id
+        }
+      })
+      .then(() => axios.get("/api/students"))
+      .then(res => dispatch(getStudents(res.data)))
+      .catch(err => console.error(err));
+  };
+}
+
 //reducer
 
 export default function students(students = [], action) {
@@ -65,7 +83,7 @@ export default function students(students = [], action) {
 
     case REMOVE_STUDENT:
       return students.filter(student => {
-        return student.id * 1 !== action.id * 1;
+        return parseInt(student.id, 10) !== parseInt(action.id, 10);
       });
 
     case ADD_STUDENT:

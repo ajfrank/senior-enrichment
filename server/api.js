@@ -77,6 +77,24 @@ api.post("/student", (req, res, next) => {
     });
 });
 
+api.put("/student", (req, res, next) => {
+  console.log("body", req.body.params);
+  Student.update(
+    {
+      name: req.body.params.name,
+      email: req.body.params.email,
+      campusId: parseInt(req.body.params.campusId, 10)
+    },
+    {
+      where: { id: req.body.params.id }
+    }
+  )
+    .then(response => res.send(response))
+    .catch(err => {
+      console.error(err);
+    });
+});
+
 api.delete("/student/:id", (req, res, next) => {
   Student.destroy({
     where: {

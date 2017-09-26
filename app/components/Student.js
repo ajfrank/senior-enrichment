@@ -8,16 +8,21 @@ class Student extends React.Component {
   }
 
   render() {
+    const { student } = this.props;
     return (
       <div>
-        <StudentForm />
+        <StudentForm student={student} />
       </div>
     );
   }
 }
 
-const mapStateToProps = state => {
-  return {};
+const mapStateToProps = (state, ownProps) => {
+  return {
+    student: state.students.find(
+      aStudent => aStudent.id === +ownProps.match.params.id
+    )
+  };
 };
 
 const mapDispatchToProps = dispatch => {

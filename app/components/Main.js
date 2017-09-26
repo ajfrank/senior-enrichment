@@ -10,6 +10,7 @@ import CampusStudents from "./CampusStudents";
 import store from "../store";
 import { fetchCampuses } from "../reducers/campuses";
 import { fetchStudents } from "../reducers/students";
+import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 
 export default class Main extends Component {
   componentDidMount() {
@@ -23,9 +24,11 @@ export default class Main extends Component {
         <Nav />
         <div className="row">
           <Route exact path="/" component={Campuses} />
+          {/* Campus Routes */}
           <Route path="/campus" component={Campuses} />
           <Route path="/campus/form/add" component={NewCampusForm} />
           <Route exact path="/campus/:id" component={CampusStudents} />
+          {/* Student Routes */}
           <Route path="/students" component={Students} />
           <Route exact path="/students/:id" component={Student} />
           <Route
