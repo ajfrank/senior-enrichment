@@ -31,11 +31,9 @@ class StudentForm extends React.Component {
   }
 
   handleChange(e) {
-    console.log("handle change is firing");
     const change = {};
     change[e.target.name] = e.target.value;
     this.setState({ student: Object.assign(this.state.student, change) });
-    console.log("this.state", this.state);
   }
 
   render() {
